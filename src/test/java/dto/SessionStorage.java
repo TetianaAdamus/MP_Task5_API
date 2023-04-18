@@ -7,16 +7,19 @@ import java.util.Map;
 
 public class SessionStorage {
 
-    private final Map<String, String > session = new HashMap<>();
+    private final Map<String, Object > session = new HashMap<>();
 
-    public void storeObject(String key, String obj){
+    public void storeObject(String key, Object obj){
         if(!isNull(obj)){
             session.put(key, obj);
         }
     }
 
-    public String getStoreObject(String key){
-        return session.get(key);
+    public <T> T getStoreObject(String key, final Class<T> returnType){
+        return returnType.cast(session.get(key));
     }
 
+    public Map<String, Object> getSessionStorage() {
+        return session;
+    }
 }
